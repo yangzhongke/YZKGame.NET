@@ -39,7 +39,7 @@ namespace YZKGame.NET
                 throw new ArgumentException("File doesn't exist." + soundFile,nameof(soundFile));
             }
             string shortpath = GetShortPathName(soundFile);
-            mciSendString("close " + shortpath);//先停止之前播放的
+            mciSendString("close " + shortpath);//stop before playing
 
             string mciCmd = "play " + shortpath;
             if (repeat)
@@ -80,11 +80,11 @@ namespace YZKGame.NET
 
         private static readonly object LogLock = new object();
         
-        public static void LogError(String msg)
+        public static void LogError(string msg)
         {    
             lock(LogLock)
             {
-                String fullMsg = "游戏引擎内核错误:" + msg;
+                string fullMsg = "Game error:" + msg;
                 Debug.WriteLine(fullMsg);
 
                 ConsoleColor oldColor = Console.ForegroundColor;
