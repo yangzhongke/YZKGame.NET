@@ -80,23 +80,21 @@ namespace YZKGame.NET
         public static int GetGameWidth()
         {
             CheckStarted();
-            int? value= (int?)CommonHelper.Invoke(formMain, () =>
+            return CommonHelper.Invoke(formMain, () =>
             {
                 FrameworkElement content = (FrameworkElement)formMain.Content;
                 return (int)content.ActualWidth;
             });
-            return value ?? 0;
         }
 
         public static int GetGameHeight()
         {
             CheckStarted();
-            int? value= (int?)CommonHelper.Invoke(formMain, () =>
+            return CommonHelper.Invoke(formMain, () =>
             {
                 FrameworkElement content = (FrameworkElement)formMain.Content;
                 return (int)content.ActualHeight;
             });
-            return value ?? 0;
         }
 
         public static void CreateSprite(string spriteName, int num)

@@ -18,9 +18,9 @@ namespace YZKGame.NET
         }
 
         [DllImport("Kernel32")]
-        static extern Int32 GetShortPathName(String path, StringBuilder shortPath, Int32 shortPathLength);
+        static extern int GetShortPathName(string path, StringBuilder shortPath, int shortPathLength);
 
-        static string GetShortPathName(String path)
+        static string GetShortPathName(string path)
         {
             StringBuilder shortpath = new StringBuilder(255);
             GetShortPathName(path, shortpath, shortpath.Capacity);
@@ -32,11 +32,11 @@ namespace YZKGame.NET
             soundFile = soundFile.ToLower();
             if (!soundFile.EndsWith(".wav") && !soundFile.EndsWith(".mp3"))
             {
-                throw new Exception("音乐只支持wav和mp3");
+                throw new ArgumentException("Only wav and mp3 files are supported.",nameof(soundFile));
             }
             if (!File.Exists(soundFile))
             {
-                throw new Exception("音乐文件不存在" + soundFile);
+                throw new ArgumentException("File doesn't exist." + soundFile,nameof(soundFile));
             }
             string shortpath = GetShortPathName(soundFile);
             mciSendString("close " + shortpath);//先停止之前播放的
@@ -53,7 +53,7 @@ namespace YZKGame.NET
         {
             if (!soundFile.EndsWith(".wav") && !soundFile.EndsWith(".mp3"))
             {
-                throw new Exception("音乐只支持wav和mp3");
+                throw new ArgumentException("Only wav and mp3 files are supported.", nameof(soundFile));
             }
 
             string shortpath = GetShortPathName(soundFile);
@@ -68,24 +68,11 @@ namespace YZKGame.NET
             return absolutePath;
         }
 
-        /// <summary>
-        /// 带返回值的在UI线程执行委托，并且等待获得返回值
-        /// 一般都是用Invoke，而不使用BeginInvoke，因为BeginInvoke无法保证执行顺序
-        /// 简化Invoke的调用，调用者只要写lambda表达式就可以，不用再new Func()
-        /// </summary>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public static object Invoke(DispatcherObject dispatcherObj,  Func<object> func)
+        public static T Invoke<T>(DispatcherObject dispatcherObj,  Func<T> func)
         {
             return dispatcherObj.Dispatcher.Invoke(func);
         }
 
-        /// <summary>
-        /// 不带返回值的在UI线程执行委托，并且等待委托返回
-        /// 简化Invoke的调用，调用者只要写lambda表达式就可以，不用再new Func()
-        /// </summary>
-        /// <param name="func"></param>
-        /// <returns></returns>
         public static void Invoke(DispatcherObject dispatcherObj, Action func)
         {
             dispatcherObj.Dispatcher.Invoke(func);

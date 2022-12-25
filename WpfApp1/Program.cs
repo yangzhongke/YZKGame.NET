@@ -16,7 +16,7 @@ static void GameMain()
         //GameCore.Pause(10);
     }
 
-    GameCore.LoadBgView("大片草地.png");
+    GameCore.LoadBgView("field.png");
 
     GameCore.CreateImage(999);
     GameCore.SetImageSource(999, "14.png");
@@ -77,7 +77,7 @@ static void GameMain()
         }
         if (key == Key.A)
         {
-            GameCore.PlaySound("打拳.mp3", false);
+            GameCore.PlaySound("Fist.mp3", false);
             Console.WriteLine(DateTime.Now + "：A");
         }
         if (key == Key.Escape)

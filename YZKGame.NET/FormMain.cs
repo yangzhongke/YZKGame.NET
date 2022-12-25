@@ -136,7 +136,7 @@ namespace YZKGame.NET
 
         public int GetTextFontSize(int labelNum)
         {
-            int? value= (int?)CommonHelper.Invoke(this, () =>
+            return CommonHelper.Invoke(this, () =>
             {
                 TextBlock label = this.FindLabelByNum(labelNum);
                 if (label == null)
@@ -145,9 +145,8 @@ namespace YZKGame.NET
                     CommonHelper.LogError("找不到编号为" + labelNum + "的label");
                     return 0;
                 }
-                return label.FontSize;
+                return (int)label.FontSize;
             });
-            return value ?? 0;
         }
 
         public void SetTextPosition(int labelNum, int x, int y)
@@ -168,7 +167,7 @@ namespace YZKGame.NET
 
         public Point GetTextPosition(int labelNum)
         {
-            Point ? value= (Point?)CommonHelper.Invoke(this, () =>
+            return CommonHelper.Invoke(this, () =>
             {
                 TextBlock label = this.FindLabelByNum(labelNum);
                 if (label == null)
@@ -186,12 +185,11 @@ namespace YZKGame.NET
                 Point point = new Point(left,top);
                 return point;
             });
-            return value ?? new Point(0,0);
         }
 
         public Size GetTextSize(int labelNum)
         {
-            Size? value= (Size?)CommonHelper.Invoke(this, () =>
+            return CommonHelper.Invoke(this, () =>
             {
                 TextBlock label = this.FindLabelByNum(labelNum);
                 if (label == null)
@@ -209,7 +207,6 @@ namespace YZKGame.NET
                 Size size = new Size(width, height);
                 return size;
             });
-            return value ?? new Size(0, 0);
         }
 
         public void HideText(int labelNum)
@@ -332,7 +329,7 @@ namespace YZKGame.NET
 
         public Point GetSpritePosition(int spriteNum)
         {
-            var pos = (Point ?)CommonHelper.Invoke(this,() =>
+            return CommonHelper.Invoke(this,() =>
             {
                 SpriteView spriteView = FindSpriteViewByNum(spriteNum);
                 if (spriteView == null)
@@ -349,19 +346,17 @@ namespace YZKGame.NET
                 }
                 return new Point(x,y);
             });
-            return pos ?? new Point(0, 0);
         }
 
         public Size GetSpriteSize(int spriteNum)
         {
-            var size = (Size ?)CommonHelper.Invoke(this, () =>
+            return CommonHelper.Invoke(this, () =>
             {
                 SpriteView spriteView = FindSpriteViewByNum(spriteNum);
                 if (spriteView == null)
                 {
                     CommonHelper.LogError("找不到编号为" + spriteView + "的精灵");
-                    return new Point(0, 0);
-                    //throw new ArgumentException("找不到编号为" + spriteView + "的精灵");
+                    return new Size(0, 0);
                 }
                 var width = spriteView.Width;
                 var height = spriteView.Height;
@@ -371,7 +366,6 @@ namespace YZKGame.NET
                 }
                 return new Size(width,height);
             });
-            return size ?? new Size(0, 0);
         }
 
         public void HideSprite(int spriteNum)
@@ -456,25 +450,24 @@ namespace YZKGame.NET
 
         public bool Confirm(string msg)
         {
-            bool? ret = (bool?)CommonHelper.Invoke(this, () => {
+            return CommonHelper.Invoke(this, () => {
                 var result = MessageBox.Show(msg, " ", MessageBoxButton.YesNo)== MessageBoxResult.Yes;
                 InvalidateVisual();
                 return result;
-            });            
-            return  ret??false;
+            });
         }
 
-        public bool Input(string msg, out string value)
+        public bool Input(string msg, out string? value)
         {
-            String tempValue=null;
-            bool? ret = (bool?)CommonHelper.Invoke(this, () =>
+            string? tempValue=null;
+            var ret = CommonHelper.Invoke(this, () =>
             {
                 var result = WindowInput.ShowInputBox(msg,out tempValue);
                 InvalidateVisual();
                 return result;
             });
             value = tempValue;
-            return ret??false;
+            return ret;
         }
 
         public void CreateImage(int imgNum)
@@ -543,7 +536,7 @@ namespace YZKGame.NET
 
         public Point GetImagePosition(int imageNum)
         {
-            var pos = (Point?)CommonHelper.Invoke(this, () =>
+            return CommonHelper.Invoke(this, () =>
             {
                 Image image = this.FindImageByNum(imageNum);
                 if (image == null)
@@ -561,12 +554,11 @@ namespace YZKGame.NET
                 }
                 return new Point(x, y);
             });
-            return pos ?? new Point(0, 0);
         }
 
         public Size GetImageSize(int imageNum)
         {
-            var size = (Size?)CommonHelper.Invoke(this, () =>
+            return CommonHelper.Invoke(this, () =>
             {
                 Image image = this.FindImageByNum(imageNum);
                 if (image == null)
@@ -583,7 +575,6 @@ namespace YZKGame.NET
                 }
                 return new Size(width, height);
             });
-            return size??new Size(0,0);
         }
 
         public void HideImage(int num)
