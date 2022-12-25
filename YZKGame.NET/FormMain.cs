@@ -299,7 +299,7 @@ namespace YZKGame.NET
             return null;
         }
 
-        public void PlaySpriteAnimate(int spriteNum, string animateName,bool repeat)
+        public void PlaySpriteAnimation(int spriteNum, string animationName,bool repeat)
         {
             CommonHelper.Invoke(this,() =>
             {
@@ -310,7 +310,7 @@ namespace YZKGame.NET
                     return;
                     //throw new ArgumentException("找不到编号为" + spriteView + "的精灵");
                 }
-                spriteView.PlayAnimateAsync(animateName, repeat);
+                spriteView.PlayAnimationAsync(animationName, repeat);
             });
         }
 

@@ -74,20 +74,20 @@ namespace YZKGame.NET
             }
         }
 
-        public void PlayAnimateAsync(string animateName, bool repeat)
+        public void PlayAnimationAsync(string animationName, bool repeat)
         {
             this.isRepeat = repeat;
 
             playTimer.Stop();
-            string animatePath = Path.Combine(spritePath, animateName);
-            if (!Directory.Exists(animatePath))
+            string animationPath = Path.Combine(spritePath, animationName);
+            if (!Directory.Exists(animationPath))
             {
-                throw new Exception("Aniate[" + animateName + "] directory "
-                    + animatePath + " not found" + "。找不到名字为" + animateName + "的动画");
+                throw new Exception("Aniate[" + animationName + "] directory "
+                    + animationPath + " not found" + "。找不到名字为" + animationName + "的动画");
             }
             currentFrames.Clear();
-            string[] pngFiles = Directory.GetFiles(animatePath, "*.png");
-            string[] jpgFiles = Directory.GetFiles(animatePath, "*.jpg");
+            string[] pngFiles = Directory.GetFiles(animationPath, "*.png");
+            string[] jpgFiles = Directory.GetFiles(animationPath, "*.jpg");
             string[] files = pngFiles.Concat(jpgFiles).ToArray();
             Array.Sort<string>(files);//根据文件名排序
             currentFrames.AddRange(files);

@@ -105,16 +105,16 @@ namespace YZKGame.NET
             formMain.CreateSprite(spriteName, num);
         }
 
-        public static void PlaySpriteAnimate(int spriteNum, string animateName)
+        public static void PlaySpriteAnimation(int spriteNum, string animationName)
         {
             CheckStarted();
-            PlaySpriteAnimate(spriteNum, animateName, false);
+            PlaySpriteAnimation(spriteNum, animationName, false);
         }
 
-        public static void PlaySpriteAnimate(int spriteNum, string animateName, bool repeat)
+        public static void PlaySpriteAnimation(int spriteNum, string animationName, bool repeat)
         {
             CheckStarted();
-            formMain.PlaySpriteAnimate(spriteNum, animateName, repeat);
+            formMain.PlaySpriteAnimation(spriteNum, animationName, repeat);
         }
 
         public static void SetSpritePosition(int spriteNum, int x, int y)
