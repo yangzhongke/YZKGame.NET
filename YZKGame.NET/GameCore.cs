@@ -275,6 +275,13 @@ public static  class GameCore
         formMain.CreateText(txtNum);
     }
 
+    public static void CreateText(int txtNum,string text)
+    {
+        CheckStarted();
+        formMain.CreateText(txtNum);
+        formMain.SetText(txtNum, text);
+    }
+
     public static void SetTextPosition(int txtNum, int x, int y)
     {
         CheckStarted();
