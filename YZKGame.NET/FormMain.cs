@@ -52,13 +52,18 @@ partial class FormMain : Window
         gameThread.Start();
     }
 
+    public void Exit()
+    {
+        this.Dispatcher.Invoke(Application.Current.Shutdown);
+        //Environment.Exit(0);
+    }
+
     public FormMain(Action gameMain):this()
     {
         gameThread = new Thread(() =>
         {
             gameMain();
-            Application.Current.Shutdown();
-            //Environment.Exit(0);
+            Exit();
         });
         gameThread.IsBackground = true;
     }

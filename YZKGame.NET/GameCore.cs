@@ -49,7 +49,7 @@ public static  class GameCore
     public static void Exit()
     {
         CheckStarted();
-        Environment.Exit(0);
+        formMain.Exit();
     }
 
     
@@ -196,7 +196,7 @@ public static  class GameCore
         formMain.CreateImage(imgNum);
     }
 
-    public static void CreateImage(int imgNum,String imgSrc)
+    public static void CreateImage(int imgNum,string imgSrc)
     {
         CheckStarted();
         formMain.CreateImage(imgNum);
@@ -354,7 +354,7 @@ public static  class GameCore
             return;
         }
         Type type = obj.GetType();
-        Dictionary<Type, String> dict = new Dictionary<Type, string>();
+        Dictionary<Type, string> dict = new Dictionary<Type, string>();
         dict[typeof(Single)] = "float";
         dict[typeof(Double)] = "double";
         dict[typeof(Int16)] = "short";
@@ -370,7 +370,7 @@ public static  class GameCore
     }
     public static void Alert(object? msg)
     {
-        Alert(msg == null?"null" : msg.ToString());
+        Alert(Convert.ToString(msg));
     }
 
     public static void Alert(string msg)

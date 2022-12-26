@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "yangzhongke",
+  "classifications": [ "Common", "Console" ],
+  "identity": "YZKGame.NET.Templates",
+  "name": "Empty YZKGame.NET Templates",
+  "shortName": "YZKGame",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  }
+}
