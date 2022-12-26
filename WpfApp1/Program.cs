@@ -26,10 +26,10 @@ static void GameMain()
         //GameCore.Pause(10);
         //GameCore.SetText(333, "a");
     }
-    GameCore.CreateSprite("guizi", 1);
+    GameCore.CreateSprite(1,"guizi");
     GameCore.PlaySpriteAnimation(1, "shenlanyao", true);
 
-    GameCore.CreateSprite("bird", 2);
+    GameCore.CreateSprite(2, "bird");
     GameCore.SetSpritePosition(2, 100, 100);
     GameCore.PlaySpriteAnimation(2, "fly", true);
 

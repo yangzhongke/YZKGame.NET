@@ -3,8 +3,9 @@
   "author": "yangzhongke",
   "classifications": [ "Common", "Console" ],
   "identity": "YZKGame.NET.Templates",
-  "name": "Empty YZKGame.NET Templates",
+  "name": "YZKGame.NET Project",
   "shortName": "YZKGame",
+  "sourceName": "YZKGameProjectName",
   "tags": {
     "language": "C#",
     "type": "project"

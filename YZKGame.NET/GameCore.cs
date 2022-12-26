@@ -98,10 +98,10 @@ public static  class GameCore
         });
     }
 
-    public static void CreateSprite(string spriteName, int num)
+    public static void CreateSprite(int num,string spriteName)
     {
         CheckStarted();
-        formMain.CreateSprite(spriteName, num);
+        formMain.CreateSprite(num, spriteName);
     }
 
     public static void PlaySpriteAnimation(int spriteNum, string animationName)
@@ -176,7 +176,7 @@ public static  class GameCore
         formMain.SetSpriteFlipY(spriteNum, flipY);
     }
 
-    public static void PlaySound(string soundName, bool repeat)
+    public static void PlaySound(string soundName, bool repeat=false)
     {
         CheckStarted();
         string musicPath = CommonHelper.MapPath("Sounds/" + soundName);

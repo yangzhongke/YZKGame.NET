@@ -251,7 +251,7 @@ partial class FormMain : Window
         }));
     }
 
-    public void CreateSprite(string spriteName,int num)
+    public void CreateSprite(int num, string spriteName)
     {
         CommonHelper.Invoke(this,() =>
         {

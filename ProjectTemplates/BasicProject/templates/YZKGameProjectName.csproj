@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="YZKGame.NET" Version="1.0.0" />
+    <PackageReference Include="YZKGame.NET" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Images\**">
