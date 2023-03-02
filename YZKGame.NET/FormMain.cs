@@ -578,4 +578,96 @@ partial class FormMain : Window
             img.Visibility = Visibility.Visible;
         });
     }
+
+    MediaElement? FindMediaElementByNum(int numToFind)
+    {
+        foreach (UIElement ctrl in gridMain.Children)
+        {
+            MediaElement? player = ctrl as MediaElement;
+            if (player != null)
+            {
+                int num = (int)player.Tag;
+                if (num == numToFind)
+                {
+                    return player;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void CreateSound(int num, string filename,bool looping=false, bool autoPlay = true)
+    {
+        if (!filename.EndsWith(".wav") && !filename.EndsWith(".mp3"))
+        {
+            throw new ArgumentException("Only wav and mp3 files are supported.", nameof(filename));
+        }
+        //If mciSendString is used for play an audio file with long filename, it will fail.
+        //GetShortPathName doesn't work on NTFS or ReFS, it will return the long-name path instead.
+        CommonHelper.Invoke(this, () => {
+            if (FindMediaElementByNum(num) != null)
+            {
+                throw new ArgumentException($"Sound with number={num} already exists.");
+            }
+            MediaElement player = new MediaElement();
+            player.Tag = num;
+            player.Visibility = Visibility.Hidden;
+            player.LoadedBehavior = MediaState.Manual; 
+            if (looping)
+            {
+                player.MediaEnded += new RoutedEventHandler((sender, _) => {
+                    MediaElement thePlayer = ((MediaElement)sender);
+                    thePlayer.Position = TimeSpan.Zero;
+                    thePlayer.Play();
+                });
+            }            
+            gridMain.Children.Add(player);
+            player.Source=new Uri(filename,UriKind.Absolute);
+            if(autoPlay)
+            {
+                player.Play();
+            }
+        });
+    }
+
+    public void PlaySound(int num)
+    {
+        CommonHelper.Invoke(this, () => {
+            var player = FindMediaElementByNum(num);
+            if (player == null)
+            {
+                CommonHelper.LogError($"cannot find Sound(number={player})");
+                return;
+            }
+            player.Play();
+        });            
+    }
+
+    public void PauseSound(int num)
+    {
+        CommonHelper.Invoke(this, () =>
+        {
+            var player = FindMediaElementByNum(num);
+            if (player == null)
+            {
+                CommonHelper.LogError($"cannot find Sound(number={player})");
+                return;
+            }
+            player.Pause();
+        });            
+    }
+
+    public void StopSound(int num)
+    {
+        CommonHelper.Invoke(this, () =>
+        {
+            var player = FindMediaElementByNum(num);
+            if (player == null)
+            {
+                CommonHelper.LogError($"cannot find Sound(number={player})");
+                return;
+            }
+            player.Stop();
+        });            
+    }
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "yangzhongke",
-  "classifications": [ "Common", "Console" ],
+  "classifications": [ "YZKGame"],
   "identity": "YZKGame.NET.Templates",
   "name": "YZKGame.NET Project",
   "shortName": "YZKGame",

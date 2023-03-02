@@ -6,6 +6,6 @@ using YZKGame.NET;
 GameCore.Start(GameMain);
 static void GameMain()
 {
-    GameCore.SetGameSize(1000, 800);
+    GameCore.SetGameSize(800, 600);
     GameCore.SetGameTitle("Game Demo");
 }

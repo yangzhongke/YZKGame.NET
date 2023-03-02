@@ -1,64 +1,10 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Threading;
 
 namespace YZKGame.NET;
-static class CommonHelper
+public static class CommonHelper
 {
-
-    [DllImport("winmm.dll")]
-    public static extern int mciSendString(string m_strCmd, string? m_strReceive, int m_v1, int m_v2);
-
-    public static int mciSendString(string m_strCmd)
-    {
-        return mciSendString(m_strCmd, null, 0, 0);
-    }
-
-    [DllImport("Kernel32")]
-    static extern int GetShortPathName(string path, StringBuilder shortPath, int shortPathLength);
-
-    static string GetShortPathName(string path)
-    {
-        StringBuilder shortpath = new StringBuilder(255);
-        GetShortPathName(path, shortpath, shortpath.Capacity);
-        return shortpath.ToString();
-    }
-
-    public static void PlaySound(string soundFile, bool repeat)
-    {
-        soundFile = soundFile.ToLower();
-        if (!soundFile.EndsWith(".wav") && !soundFile.EndsWith(".mp3"))
-        {
-            throw new ArgumentException("Only wav and mp3 files are supported.", nameof(soundFile));
-        }
-        if (!File.Exists(soundFile))
-        {
-            throw new ArgumentException("File doesn't exist." + soundFile, nameof(soundFile));
-        }
-        string shortpath = GetShortPathName(soundFile);
-        mciSendString("close " + shortpath);//stop before playing
-
-        string mciCmd = "play " + shortpath;
-        if (repeat)
-        {
-            mciCmd += " repeat";
-        }
-        mciSendString(mciCmd);
-    }
-
-    public static void CloseSound(string soundFile)
-    {
-        if (!soundFile.EndsWith(".wav") && !soundFile.EndsWith(".mp3"))
-        {
-            throw new ArgumentException("Only wav and mp3 files are supported.", nameof(soundFile));
-        }
-
-        string shortpath = GetShortPathName(soundFile);
-        string mciCmd = "close " + shortpath;
-        mciSendString(mciCmd);
-    }
 
     public static string MapPath(string path)
     {

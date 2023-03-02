@@ -6,9 +6,24 @@ using YZKGame.NET;
 GameCore.Start(GameMain);
 static void GameMain()
 {
-    GameCore.SetGameSize(1000, 800);
-    GameCore.PlaySound("ab.mp3", true);
-    GameCore.SetGameTitle("Game Demo");
+    /*
+    GameCore.CreateSound(1,"a.mp3");
+    GameCore.Pause(2000);
+    GameCore.PauseSound(1);
+    GameCore.Pause(2000);
+    GameCore.PlaySound(1);
+    GameCore.Pause(5000);
+    GameCore.StopSound(1);
+    GameCore.Pause(2000);
+    GameCore.PlaySound(1);
+    GameCore.Pause(5000);*/
+    GameCore.CreateSound(1, "Fist.mp3",looping:true);
+    GameCore.CreateSound(2, "a.mp3");
+    GameCore.Pause(3000);
+    GameCore.StopSound(1);
+    GameCore.Alert("aa");
+    return;
+
 
     for (int i = 0; i < 500; i++)
     {
@@ -77,7 +92,6 @@ static void GameMain()
         }
         if (key == Key.A)
         {
-            GameCore.PlaySound("Fist.mp3", false);
             Console.WriteLine(DateTime.Now + "：A");
         }
         if (key == Key.Escape)

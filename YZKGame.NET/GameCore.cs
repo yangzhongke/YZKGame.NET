@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -19,6 +20,10 @@ public static  class GameCore
         }
     }
 
+    /// <summary>
+    /// Start game routine
+    /// </summary>
+    /// <param name="gameMain"></param>
     public static void Start(Action gameMain)
     {
         if (isStarted)
@@ -34,6 +39,10 @@ public static  class GameCore
         app.Run(formMain);
     }
 
+    /// <summary>
+    /// Get the pressed key.
+    /// </summary>
+    /// <returns></returns>
     public static Key GetPressedKey()
     {
         CheckStarted();
@@ -176,18 +185,29 @@ public static  class GameCore
         formMain.SetSpriteFlipY(spriteNum, flipY);
     }
 
-    public static void PlaySound(string soundName, bool repeat=false)
+    public static void CreateSound(int num, string filename, bool looping = false,bool autoPlay=true)
     {
         CheckStarted();
-        string musicPath = CommonHelper.MapPath("Sounds/" + soundName);
-        CommonHelper.PlaySound(musicPath, repeat);
+        string musicPath = CommonHelper.MapPath(Path.Combine("Sounds", filename));
+        formMain.CreateSound(num, musicPath, looping: looping,autoPlay: autoPlay);
     }
 
-    public static void CloseSound(string soundName)
+    public static void PlaySound(int num)
     {
         CheckStarted();
-        string musicPath = CommonHelper.MapPath("Sounds/" + soundName);
-        CommonHelper.CloseSound(musicPath);
+        formMain.PlaySound(num);
+    }
+
+    public static void PauseSound(int num)
+    {
+        CheckStarted();
+        formMain.PauseSound(num);
+    }
+
+    public static void StopSound(int num)
+    {
+        CheckStarted();
+        formMain.StopSound(num);
     }
 
     public static void CreateImage(int imgNum)
@@ -200,14 +220,14 @@ public static  class GameCore
     {
         CheckStarted();
         formMain.CreateImage(imgNum);
-        string imgPath = CommonHelper.MapPath("Images/" + imgSrc);
+        string imgPath = CommonHelper.MapPath(Path.Combine("Images" ,imgSrc));
         formMain.SetImageSource(imgNum, imgPath);
     }
 
     public static void SetImageSource(int imgNum, string imgName)
     {
         CheckStarted();
-        string imgPath = CommonHelper.MapPath("Images/" + imgName);
+        string imgPath = CommonHelper.MapPath(Path.Combine("Images",imgName));
         formMain.SetImageSource(imgNum,imgPath);
     }
 
@@ -265,7 +285,7 @@ public static  class GameCore
     public static void LoadBgView(string imgName)
     {
         CheckStarted();
-        string musicPath = CommonHelper.MapPath("Images/" + imgName);
+        string musicPath = CommonHelper.MapPath(Path.Combine("Images",imgName));
         formMain.LoadBgView(musicPath);
     }
 
