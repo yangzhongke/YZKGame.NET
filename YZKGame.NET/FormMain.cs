@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -50,6 +51,7 @@ partial class FormMain : Window
     void FormMain_Loaded(object sender, RoutedEventArgs e)
     {
         gameThread.Start();
+        HideAdornerWindow();
     }
 
     public void Exit()
@@ -66,6 +68,32 @@ partial class FormMain : Window
             Exit();
         });
         gameThread.IsBackground = true;
+    }
+
+    /// <summary>
+    /// Hide the AdornerWindow of Xaml In-App Inspector Toolbar
+    /// </summary>
+    private static void HideAdornerWindow()
+    {
+        if (!Debugger.IsAttached)
+        {
+            return;
+        }
+        ThreadPool.QueueUserWorkItem(_ => {
+            while (true)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() => {
+                    //Using Snoop, we can find that the class name of Xaml In-App inspector is AdornerWindow
+                    var adornerWindow = Application.Current.Windows.Cast<Window>()
+                        .FirstOrDefault(w => w.GetType().Name == "AdornerWindow");
+                    if (adornerWindow != null)
+                    {
+                        adornerWindow.Visibility = Visibility.Hidden;
+                    }
+                }));
+                Thread.Sleep(500);
+            }
+        });
     }
 
     public void Clear()

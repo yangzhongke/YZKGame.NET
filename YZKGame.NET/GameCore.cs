@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -38,6 +39,7 @@ public static  class GameCore
         Application app = new Application();
         app.Run(formMain);
     }
+
 
     /// <summary>
     /// Get the pressed key.
