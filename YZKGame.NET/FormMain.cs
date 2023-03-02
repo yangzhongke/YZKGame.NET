@@ -137,17 +137,18 @@ partial class FormMain : Window
         return null;
     }
 
-    public void SetTextColor(int txtNum, Brush color)
+    public void SetTextColor(int txtNum, Color color)
     {
         CommonHelper.Invoke(this,() =>
         {
+            SolidColorBrush brush = new SolidColorBrush(color);
             TextBlock text = this.FindTextByNum(txtNum);
             if (text == null)
             {
                 CommonHelper.LogError($"Cannot find text(number={txtNum})");
                 return;
             }
-            text.Foreground = color;
+            text.Foreground = brush;
         });
     }
 

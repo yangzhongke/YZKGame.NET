@@ -291,13 +291,7 @@ public static  class GameCore
         formMain.LoadBgView(musicPath);
     }
 
-    public static void CreateText(int txtNum)
-    {
-        CheckStarted();
-        formMain.CreateText(txtNum);
-    }
-
-    public static void CreateText(int txtNum,string text)
+    public static void CreateText(int txtNum,string text="")
     {
         CheckStarted();
         formMain.CreateText(txtNum);
@@ -317,13 +311,6 @@ public static  class GameCore
     }
 
     public static void SetTextColor(int txtNum, Color color)
-    {
-        CheckStarted();
-        SolidColorBrush brush = new SolidColorBrush(color);
-        SetTextColor(txtNum, brush);
-    }
-
-    public static void SetTextColor(int txtNum, Brush color)
     {
         CheckStarted();
         formMain.SetTextColor(txtNum, color);

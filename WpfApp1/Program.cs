@@ -17,11 +17,14 @@ static void GameMain()
     GameCore.Pause(2000);
     GameCore.PlaySound(1);
     GameCore.Pause(5000);*/
-    GameCore.CreateSound(1, "Fist.mp3",looping:true);
-    GameCore.CreateSound(2, "a.mp3");
-    GameCore.Pause(3000);
-    GameCore.StopSound(1);
-    GameCore.Alert("aa");
+    GameCore.CreateText(0, "杨中科");
+    GameCore.SetTextColor(0, Colors.Red);
+    for(int i = 0; i < 10; i++)
+    {
+        GameCore.SetTextFontSize(0, 10+10*i);
+        GameCore.Pause(200);
+    }
+    GameCore.Alert(0);
     return;
 
 
@@ -56,7 +59,6 @@ static void GameMain()
     GameCore.CreateText(0);
     GameCore.SetTextPosition(0, 100, 100);
     GameCore.SetTextFontSize(0, 30);
-    GameCore.SetTextColor(0, Brushes.Red);
 
 
     while (true)
