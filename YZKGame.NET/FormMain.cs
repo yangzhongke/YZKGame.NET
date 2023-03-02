@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -82,6 +83,7 @@ partial class FormMain : Window
         ThreadPool.QueueUserWorkItem(_ => {
             while (true)
             {
+                if (Application.Current == null) break;
                 Application.Current.Dispatcher.Invoke(new Action(() => {
                     //Using Snoop, we can find that the class name of Xaml In-App inspector is AdornerWindow
                     var adornerWindow = Application.Current.Windows.Cast<Window>()
@@ -698,5 +700,21 @@ partial class FormMain : Window
             }
             player.Stop();
         });            
+    }
+
+    public Point GetMousePosition()
+    {
+        return CommonHelper.Invoke(this, () =>
+        {
+            return Mouse.GetPosition(this);
+        });
+    }
+
+    public bool IsKeyDown(Key key)
+    {
+        return CommonHelper.Invoke(this, () =>
+        {
+            return Keyboard.IsKeyDown(key);
+        });
     }
 }

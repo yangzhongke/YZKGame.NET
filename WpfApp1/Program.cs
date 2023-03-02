@@ -19,10 +19,22 @@ static void GameMain()
     GameCore.Pause(5000);*/
     GameCore.CreateText(0, "杨中科");
     GameCore.SetTextColor(0, Colors.Red);
-    for(int i = 0; i < 10; i++)
+    /*
+    while(true)
     {
-        GameCore.SetTextFontSize(0, 10+10*i);
-        GameCore.Pause(200);
+        var p = GameCore.GetMousePosition();
+        GameCore.SetText(0,p.ToString());
+    }*/
+    while (true)
+    {
+        if (GameCore.IsKeyDown(Key.Right) && GameCore.IsKeyDown(Key.Down))
+        {
+            GameCore.SetGameTitle("xxxx");
+        }
+        else
+        {
+            GameCore.SetGameTitle("yyyyy");
+        }
     }
     GameCore.Alert(0);
     return;

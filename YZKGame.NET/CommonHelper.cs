@@ -13,14 +13,28 @@ public static class CommonHelper
         return absolutePath;
     }
 
-    public static T Invoke<T>(DispatcherObject dispatcherObj, Func<T> func)
+    public static T? Invoke<T>(DispatcherObject dispatcherObj, Func<T> func)
     {
-        return dispatcherObj.Dispatcher.Invoke(func);
+        try
+        {
+            return dispatcherObj.Dispatcher.Invoke(func);
+        }
+        catch (TaskCanceledException)//when application is being closed.
+        {
+            return default(T);
+        }
     }
 
     public static void Invoke(DispatcherObject dispatcherObj, Action func)
     {
-        dispatcherObj.Dispatcher.Invoke(func);
+        try
+        {
+            dispatcherObj.Dispatcher.Invoke(func);
+        }
+        catch(TaskCanceledException)//when application is being closed.
+        {
+            
+        }        
     }
 
     private static readonly object LogLock = new object();

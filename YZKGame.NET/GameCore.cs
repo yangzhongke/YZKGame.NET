@@ -419,4 +419,15 @@ public static  class GameCore
             return null;
         }
     }
+
+    public static Point GetMousePosition()
+    {
+        CheckStarted();
+        return formMain.GetMousePosition();
+    }
+    public static bool IsKeyDown(Key key)
+    {
+        CheckStarted();
+        return formMain.IsKeyDown(key);
+    }
 }
