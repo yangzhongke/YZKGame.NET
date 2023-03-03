@@ -13,7 +13,7 @@ public static class CommonHelper
         return absolutePath;
     }
 
-    public static T? Invoke<T>(DispatcherObject dispatcherObj, Func<T> func)
+    public static T? Invoke<T>(this DispatcherObject dispatcherObj, Func<T> func)
     {
         try
         {
@@ -25,7 +25,7 @@ public static class CommonHelper
         }
     }
 
-    public static void Invoke(DispatcherObject dispatcherObj, Action func)
+    public static void Invoke(this DispatcherObject dispatcherObj, Action func)
     {
         try
         {

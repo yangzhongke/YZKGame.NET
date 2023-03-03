@@ -6,36 +6,17 @@ using YZKGame.NET;
 GameCore.Start(GameMain);
 static void GameMain()
 {
-    /*
-    GameCore.CreateSound(1,"a.mp3");
-    GameCore.Pause(2000);
-    GameCore.PauseSound(1);
-    GameCore.Pause(2000);
-    GameCore.PlaySound(1);
-    GameCore.Pause(5000);
-    GameCore.StopSound(1);
-    GameCore.Pause(2000);
-    GameCore.PlaySound(1);
-    GameCore.Pause(5000);*/
-    GameCore.CreateText(0, "杨中科");
-    GameCore.SetTextColor(0, Colors.Red);
-    /*
-    while(true)
-    {
-        var p = GameCore.GetMousePosition();
-        GameCore.SetText(0,p.ToString());
-    }*/
+    GameCore.SetMouseCursor(Cursors.Pen);
     while (true)
     {
-        if (GameCore.IsKeyDown(Key.Right) && GameCore.IsKeyDown(Key.Down))
+        if(GameCore.IsMouseLeftButtonPressed())
         {
-            GameCore.SetGameTitle("xxxx");
+            GameCore.SetGameTitle(GameCore.GetMousePosition().ToString());
+
         }
-        else
-        {
-            GameCore.SetGameTitle("yyyyy");
-        }
+        
     }
+
     GameCore.Alert(0);
     return;
 

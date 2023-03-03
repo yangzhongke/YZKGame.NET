@@ -701,20 +701,4 @@ partial class FormMain : Window
             player.Stop();
         });            
     }
-
-    public Point GetMousePosition()
-    {
-        return CommonHelper.Invoke(this, () =>
-        {
-            return Mouse.GetPosition(this);
-        });
-    }
-
-    public bool IsKeyDown(Key key)
-    {
-        return CommonHelper.Invoke(this, () =>
-        {
-            return Keyboard.IsKeyDown(key);
-        });
-    }
 }

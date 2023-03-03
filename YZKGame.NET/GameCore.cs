@@ -423,11 +423,42 @@ public static  class GameCore
     public static Point GetMousePosition()
     {
         CheckStarted();
-        return formMain.GetMousePosition();
+        return formMain.Invoke(() =>
+        {
+            return Mouse.GetPosition(formMain);
+        });
     }
     public static bool IsKeyDown(Key key)
     {
         CheckStarted();
-        return formMain.IsKeyDown(key);
+        return CommonHelper.Invoke(formMain,() => {
+            return Keyboard.IsKeyDown(key);
+        });
+    }
+
+    public static bool IsMouseLeftButtonPressed()
+    {
+        CheckStarted();
+        return CommonHelper.Invoke(formMain, () =>
+        {
+            return Mouse.LeftButton == MouseButtonState.Pressed;
+        });
+    }
+
+    public static bool IsMouseRightButtonPressed()
+    {
+        CheckStarted();
+        return CommonHelper.Invoke(formMain, () =>
+        {
+            return Mouse.RightButton == MouseButtonState.Pressed;
+        });
+    }
+
+    public static void SetMouseCursor(Cursor cursor)
+    {
+        CheckStarted();
+        CommonHelper.Invoke(formMain, () => {
+            formMain.Cursor = cursor;
+        });
     }
 }
