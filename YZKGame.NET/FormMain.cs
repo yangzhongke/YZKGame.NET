@@ -14,6 +14,20 @@ partial class FormMain : Window
     private Canvas gridMain;
     private Key pressedKey = Key.None;
 
+    // Track logical game dimensions explicitly to avoid ActualWidth/ActualHeight timing issues
+    private int _gameWidth = 600;
+    private int _gameHeight = 600;
+
+    public int GameWidth => _gameWidth;
+    public int GameHeight => _gameHeight;
+
+    /// <summary>Sets the logical game size used by GetGameWidth/GetGameHeight.</summary>
+    public void SetLogicalSize(int width, int height)
+    {
+        _gameWidth = width;
+        _gameHeight = height;
+    }
+
     public FormMain()
     {
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -373,13 +387,14 @@ partial class FormMain : Window
                 CommonHelper.LogError($"cannot find spriteview(number={spriteNum})");
                 return new Size(0, 0);
             }
-            var width = spriteView.Width;
-            var height = spriteView.Height;
+            // Prefer ActualWidth/ActualHeight (post-layout); fall back to explicitly set Width/Height
+            double width = spriteView.ActualWidth > 0 ? spriteView.ActualWidth : spriteView.Width;
+            double height = spriteView.ActualHeight > 0 ? spriteView.ActualHeight : spriteView.Height;
             if (double.IsNaN(width) || double.IsNaN(height))
             {
                 return new Size(0, 0);
             }
-            return new Size(width,height);
+            return new Size(width, height);
         });
     }
 
@@ -407,7 +422,7 @@ partial class FormMain : Window
                 CommonHelper.LogError($"cannot find spriteview(number={spriteNum})");
                 return;
             }
-            spriteView.Visibility = System.Windows.Visibility.Hidden;
+            spriteView.Visibility = System.Windows.Visibility.Visible;
         });
     }
     public void SetSpriteFlipX(int spriteNum, bool flipX)
@@ -420,9 +435,14 @@ partial class FormMain : Window
                 CommonHelper.LogError($"cannot find spriteview(number={spriteNum})");
                 return;
             }
-            ScaleTransform scaleTransform = (ScaleTransform)spriteView.RenderTransform;
-            scaleTransform.ScaleX = flipX ?-1:1;
-            spriteView.RenderTransform = scaleTransform;
+            // RenderTransform may not be a ScaleTransform yet (e.g. before first animation)
+            ScaleTransform? scaleTransform = spriteView.RenderTransform as ScaleTransform;
+            if (scaleTransform == null)
+            {
+                scaleTransform = new ScaleTransform(1, 1, spriteView.Width / 2, spriteView.Height / 2);
+                spriteView.RenderTransform = scaleTransform;
+            }
+            scaleTransform.ScaleX = flipX ? -1 : 1;
         });
     }
 
@@ -436,9 +456,13 @@ partial class FormMain : Window
                 CommonHelper.LogError($"cannot find spriteview(number={spriteNum})");
                 return;
             }
-            ScaleTransform scaleTransform = (ScaleTransform)spriteView.RenderTransform;
+            ScaleTransform? scaleTransform = spriteView.RenderTransform as ScaleTransform;
+            if (scaleTransform == null)
+            {
+                scaleTransform = new ScaleTransform(1, 1, spriteView.Width / 2, spriteView.Height / 2);
+                spriteView.RenderTransform = scaleTransform;
+            }
             scaleTransform.ScaleY = flipY ? -1 : 1;
-            spriteView.RenderTransform = scaleTransform;
         });
     }
 
@@ -572,11 +596,13 @@ partial class FormMain : Window
                 CommonHelper.LogError($"cannot find image(number={imageNum})");
                 return new Size(0, 0);
             }
-            var width = image.Width;
-            var height = image.Height;
-            if (double.IsNaN(width) || double.IsNaN(height))
+            // ActualWidth/ActualHeight are valid after layout; fall back to source pixel dimensions
+            double width = image.ActualWidth;
+            double height = image.ActualHeight;
+            if ((width == 0 || height == 0) && image.Source is BitmapSource bitmapSource)
             {
-                return new Size(0, 0);
+                width = bitmapSource.PixelWidth;
+                height = bitmapSource.PixelHeight;
             }
             return new Size(width, height);
         });

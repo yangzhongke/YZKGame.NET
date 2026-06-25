@@ -86,27 +86,21 @@ public static  class GameCore
         {
             formMain.Width = width;
             formMain.Height = height;
+            // Keep explicit tracking so GetGameWidth/Height are immediately consistent
+            formMain.SetLogicalSize(width, height);
         });
     }
 
     public static int GetGameWidth()
     {
         CheckStarted();
-        return CommonHelper.Invoke(formMain, () =>
-        {
-            FrameworkElement content = (FrameworkElement)formMain.Content;
-            return (int)content.ActualWidth;
-        });
+        return CommonHelper.Invoke(formMain, () => formMain.GameWidth);
     }
 
     public static int GetGameHeight()
     {
         CheckStarted();
-        return CommonHelper.Invoke(formMain, () =>
-        {
-            FrameworkElement content = (FrameworkElement)formMain.Content;
-            return (int)content.ActualHeight;
-        });
+        return CommonHelper.Invoke(formMain, () => formMain.GameHeight);
     }
 
     public static void CreateSprite(int num,string spriteName)
@@ -187,6 +181,16 @@ public static  class GameCore
         formMain.SetSpriteFlipY(spriteNum, flipY);
     }
 
+    /// <summary>
+    /// Create a sound player and optionally start playing immediately.
+    /// </summary>
+    /// <param name="num">Unique numeric identifier for this sound.</param>
+    /// <param name="filename">Filename (relative to the Sounds folder), e.g. "bgm.mp3".</param>
+    /// <param name="looping">
+    /// When <c>true</c> the sound loops automatically after it ends —
+    /// ideal for background music. Defaults to <c>false</c>.
+    /// </param>
+    /// <param name="autoPlay">When <c>true</c> (default) playback starts immediately after loading.</param>
     public static void CreateSound(int num, string filename, bool looping = false,bool autoPlay=true)
     {
         CheckStarted();
