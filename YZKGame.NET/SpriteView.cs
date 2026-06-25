@@ -30,6 +30,9 @@ namespace YZKGame.NET
             this.SpriteName = spriteName;
             this.playTimer.Interval = TimeSpan.FromMilliseconds(200);
             this.playTimer.Tick += playTimer_Tick;
+
+            // Always start with a ScaleTransform so FlipX/FlipY never causes an InvalidCastException
+            this.RenderTransform = new ScaleTransform(1, 1, 0, 0);
         }
 
         /// <summary>
@@ -96,7 +99,8 @@ namespace YZKGame.NET
             this.Height = maxPicSize.Height;
             this.Stretch = System.Windows.Media.Stretch.Uniform;
 
-            ScaleTransform scaleTransform = new ScaleTransform();            
+            // Reuse existing ScaleTransform to preserve FlipX/FlipY state set before/between animations
+            ScaleTransform scaleTransform = this.RenderTransform as ScaleTransform ?? new ScaleTransform();
             scaleTransform.CenterX = this.Width / 2;
             scaleTransform.CenterY = this.Height / 2;
             this.RenderTransform = scaleTransform;

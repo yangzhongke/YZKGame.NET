@@ -7,28 +7,25 @@ GameCore.Start(GameMain);
 static void GameMain()
 {
     GameCore.SetMouseCursor(Cursors.Pen);
+    /*
     while (true)
     {
         if(GameCore.IsMouseLeftButtonPressed())
         {
             GameCore.SetGameTitle(GameCore.GetMousePosition().ToString());
-
         }
-        
-    }
+    }*/
 
-    GameCore.Alert(0);
-    return;
-
-
+    /*
     for (int i = 0; i < 500; i++)
     {
         //GameCore.SetGameSize(GameCore.GetGameWidth()+1,GameCore.GetGameHeight()+1);
         //GameCore.Pause(10);
-    }
+    }*/
 
     GameCore.LoadBgView("field.png");
-
+    GameCore.CreateSound(0, "Fist.mp3", true);
+    GameCore.PlaySound(0);
     GameCore.CreateImage(999);
     GameCore.SetImageSource(999, "14.png");
     for (int i = 100; i <= 200; i++)
